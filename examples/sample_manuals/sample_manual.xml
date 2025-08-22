@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manualTest xmlns="http://ui-manual-validator.com/schema" version="1.0">
+  
+  <metadata>
+    <title>Sample Login Page Manual Test</title>
+    <description>Comprehensive manual testing suite for login page functionality and accessibility</description>
+    <author>UI Manual Validator Team</author>
+    <created>2024-01-15T10:00:00Z</created>
+    <tags>
+      <tag>login</tag>
+      <tag>authentication</tag>
+      <tag>accessibility</tag>
+      <tag>functional</tag>
+    </tags>
+  </metadata>
+
+  <testSuites>
+    
+    <testSuite id="ts_login_functionality">
+      <name>Login Functionality Tests</name>
+      <description>Tests for core login functionality including form validation and authentication</description>
+      
+      <testCases>
+        
+        <testCase id="tc_valid_login">
+          <name>Valid User Login</name>
+          <description>Test successful login with valid credentials</description>
+          <priority>high</priority>
+          <steps>
+            <step number="1">
+              <action>Navigate to login page</action>
+              <target>Login URL</target>
+            </step>
+            <step number="2">
+              <action>Enter valid username</action>
+              <target>Username field</target>
+              <data>testuser@example.com</data>
+            </step>
+            <step number="3">
+              <action>Enter valid password</action>
+              <target>Password field</target>
+              <data>ValidPassword123</data>
+            </step>
+            <step number="4">
+              <action>Click login button</action>
+              <target>Login button</target>
+            </step>
+          </steps>
+          <expectedResult>User is successfully logged in and redirected to dashboard</expectedResult>
+          <selectors>
+            <selector>
+              <type>id</type>
+              <value>username</value>
+              <description>Username input field</description>
+            </selector>
+            <selector>
+              <type>id</type>
+              <value>password</value>
+              <description>Password input field</description>
+            </selector>
+            <selector>
+              <type>css</type>
+              <value>button[type="submit"]</value>
+              <description>Login submit button</description>
+            </selector>
+          </selectors>
+        </testCase>
+
+        <testCase id="tc_invalid_login">
+          <name>Invalid User Login</name>
+          <description>Test login failure with invalid credentials</description>
+          <priority>high</priority>
+          <steps>
+            <step number="1">
+              <action>Navigate to login page</action>
+              <target>Login URL</target>
+            </step>
+            <step number="2">
+              <action>Enter invalid username</action>
+              <target>Username field</target>
+              <data>invalid@example.com</data>
+            </step>
+            <step number="3">
+              <action>Enter invalid password</action>
+              <target>Password field</target>
+              <data>wrongpassword</data>
+            </step>
+            <step number="4">
+              <action>Click login button</action>
+              <target>Login button</target>
+            </step>
+          </steps>
+          <expectedResult>Error message is displayed indicating invalid credentials</expectedResult>
+          <selectors>
+            <selector>
+              <type>css</type>
+              <value>.error-message</value>
+              <description>Error message container</description>
+            </selector>
+          </selectors>
+        </testCase>
+
+        <testCase id="tc_empty_fields">
+          <name>Empty Field Validation</name>
+          <description>Test form validation when fields are left empty</description>
+          <priority>medium</priority>
+          <steps>
+            <step number="1">
+              <action>Navigate to login page</action>
+              <target>Login URL</target>
+            </step>
+            <step number="2">
+              <action>Leave username field empty</action>
+              <target>Username field</target>
+            </step>
+            <step number="3">
+              <action>Leave password field empty</action>
+              <target>Password field</target>
+            </step>
+            <step number="4">
+              <action>Click login button</action>
+              <target>Login button</target>
+            </step>
+          </steps>
+          <expectedResult>Validation errors are displayed for required fields</expectedResult>
+        </testCase>
+
+      </testCases>
+    </testSuite>
+
+    <testSuite id="ts_login_accessibility">
+      <name>Login Accessibility Tests</name>
+      <description>Tests for accessibility compliance and keyboard navigation</description>
+      
+      <testCases>
+        
+        <testCase id="tc_keyboard_navigation">
+          <name>Keyboard Navigation</name>
+          <description>Test that all form elements can be accessed via keyboard</description>
+          <priority>high</priority>
+          <steps>
+            <step number="1">
+              <action>Navigate to login page</action>
+              <target>Login URL</target>
+            </step>
+            <step number="2">
+              <action>Use Tab key to navigate through form elements</action>
+              <target>Form elements</target>
+            </step>
+            <step number="3">
+              <action>Verify focus indicators are visible</action>
+              <target>All interactive elements</target>
+            </step>
+            <step number="4">
+              <action>Use Enter key to submit form</action>
+              <target>Login button</target>
+            </step>
+          </steps>
+          <expectedResult>All elements are keyboard accessible with visible focus indicators</expectedResult>
+        </testCase>
+
+        <testCase id="tc_screen_reader">
+          <name>Screen Reader Compatibility</name>
+          <description>Test form labels and ARIA attributes for screen reader compatibility</description>
+          <priority>high</priority>
+          <steps>
+            <step number="1">
+              <action>Enable screen reader</action>
+              <target>Assistive technology</target>
+            </step>
+            <step number="2">
+              <action>Navigate to login page</action>
+              <target>Login URL</target>
+            </step>
+            <step number="3">
+              <action>Verify form labels are announced</action>
+              <target>Username and password fields</target>
+            </step>
+            <step number="4">
+              <action>Verify error messages are announced</action>
+              <target>Error containers</target>
+            </step>
+          </steps>
+          <expectedResult>All form elements and messages are properly announced by screen reader</expectedResult>
+          <selectors>
+            <selector>
+              <type>css</type>
+              <value>label[for="username"]</value>
+              <description>Username field label</description>
+            </selector>
+            <selector>
+              <type>css</type>
+              <value>label[for="password"]</value>
+              <description>Password field label</description>
+            </selector>
+          </selectors>
+        </testCase>
+
+        <testCase id="tc_color_contrast">
+          <name>Color Contrast Validation</name>
+          <description>Verify sufficient color contrast for text and interactive elements</description>
+          <priority>medium</priority>
+          <steps>
+            <step number="1">
+              <action>Navigate to login page</action>
+              <target>Login URL</target>
+            </step>
+            <step number="2">
+              <action>Check contrast ratio of text elements</action>
+              <target>All text on page</target>
+            </step>
+            <step number="3">
+              <action>Check contrast ratio of interactive elements</action>
+              <target>Buttons and form fields</target>
+            </step>
+          </steps>
+          <expectedResult>All text meets WCAG AA contrast requirements (4.5:1 for normal text)</expectedResult>
+        </testCase>
+
+      </testCases>
+    </testSuite>
+
+    <testSuite id="ts_login_ui_ux">
+      <name>Login UI/UX Tests</name>
+      <description>Tests for user interface design and user experience</description>
+      
+      <testCases>
+        
+        <testCase id="tc_responsive_design">
+          <name>Responsive Design</name>
+          <description>Test login form on different screen sizes</description>
+          <priority>medium</priority>
+          <steps>
+            <step number="1">
+              <action>Open login page on desktop</action>
+              <target>Browser window</target>
+            </step>
+            <step number="2">
+              <action>Resize window to tablet size (768px)</action>
+              <target>Browser window</target>
+            </step>
+            <step number="3">
+              <action>Resize window to mobile size (320px)</action>
+              <target>Browser window</target>
+            </step>
+            <step number="4">
+              <action>Verify form remains usable</action>
+              <target>Login form</target>
+            </step>
+          </steps>
+          <expectedResult>Login form adapts properly to different screen sizes and remains functional</expectedResult>
+        </testCase>
+
+        <testCase id="tc_password_visibility">
+          <name>Password Visibility Toggle</name>
+          <description>Test password show/hide functionality if available</description>
+          <priority>low</priority>
+          <steps>
+            <step number="1">
+              <action>Navigate to login page</action>
+              <target>Login URL</target>
+            </step>
+            <step number="2">
+              <action>Enter password in password field</action>
+              <target>Password field</target>
+              <data>TestPassword123</data>
+            </step>
+            <step number="3">
+              <action>Click password visibility toggle if available</action>
+              <target>Show/hide password button</target>
+            </step>
+            <step number="4">
+              <action>Verify password is shown/hidden</action>
+              <target>Password field</target>
+            </step>
+          </steps>
+          <expectedResult>Password visibility can be toggled and reflects current state</expectedResult>
+          <selectors>
+            <selector>
+              <type>css</type>
+              <value>.password-toggle</value>
+              <description>Password visibility toggle button</description>
+            </selector>
+          </selectors>
+        </testCase>
+
+      </testCases>
+    </testSuite>
+
+  </testSuites>
+
+</manualTest>
