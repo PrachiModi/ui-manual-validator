@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://ui-manual-validator.com/schema"
+           xmlns:tns="http://ui-manual-validator.com/schema"
+           elementFormDefault="qualified">
+
+  <!-- Root element for manual testing configuration -->
+  <xs:element name="manualTest" type="tns:ManualTestType"/>
+
+  <!-- Manual test configuration -->
+  <xs:complexType name="ManualTestType">
+    <xs:sequence>
+      <xs:element name="metadata" type="tns:MetadataType"/>
+      <xs:element name="testSuites" type="tns:TestSuitesType"/>
+    </xs:sequence>
+    <xs:attribute name="version" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- Metadata for the test configuration -->
+  <xs:complexType name="MetadataType">
+    <xs:sequence>
+      <xs:element name="title" type="xs:string"/>
+      <xs:element name="description" type="xs:string"/>
+      <xs:element name="author" type="xs:string"/>
+      <xs:element name="created" type="xs:dateTime"/>
+      <xs:element name="tags" type="tns:TagsType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Tags collection -->
+  <xs:complexType name="TagsType">
+    <xs:sequence>
+      <xs:element name="tag" type="xs:string" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Test suites collection -->
+  <xs:complexType name="TestSuitesType">
+    <xs:sequence>
+      <xs:element name="testSuite" type="tns:TestSuiteType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Individual test suite -->
+  <xs:complexType name="TestSuiteType">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="description" type="xs:string"/>
+      <xs:element name="testCases" type="tns:TestCasesType"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="required"/>
+  </xs:complexType>
+
+  <!-- Test cases collection -->
+  <xs:complexType name="TestCasesType">
+    <xs:sequence>
+      <xs:element name="testCase" type="tns:TestCaseType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Individual test case -->
+  <xs:complexType name="TestCaseType">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="description" type="xs:string"/>
+      <xs:element name="priority" type="tns:PriorityType"/>
+      <xs:element name="steps" type="tns:StepsType"/>
+      <xs:element name="expectedResult" type="xs:string"/>
+      <xs:element name="selectors" type="tns:SelectorsType" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="required"/>
+  </xs:complexType>
+
+  <!-- Priority enumeration -->
+  <xs:simpleType name="PriorityType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="high"/>
+      <xs:enumeration value="medium"/>
+      <xs:enumeration value="low"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Test steps collection -->
+  <xs:complexType name="StepsType">
+    <xs:sequence>
+      <xs:element name="step" type="tns:StepType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Individual test step -->
+  <xs:complexType name="StepType">
+    <xs:sequence>
+      <xs:element name="action" type="xs:string"/>
+      <xs:element name="target" type="xs:string" minOccurs="0"/>
+      <xs:element name="data" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="number" type="xs:positiveInteger" use="required"/>
+  </xs:complexType>
+
+  <!-- Element selectors collection -->
+  <xs:complexType name="SelectorsType">
+    <xs:sequence>
+      <xs:element name="selector" type="tns:SelectorType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Individual element selector -->
+  <xs:complexType name="SelectorType">
+    <xs:sequence>
+      <xs:element name="type" type="tns:SelectorTypeEnum"/>
+      <xs:element name="value" type="xs:string"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Selector type enumeration -->
+  <xs:simpleType name="SelectorTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="css"/>
+      <xs:enumeration value="xpath"/>
+      <xs:enumeration value="id"/>
+      <xs:enumeration value="class"/>
+      <xs:enumeration value="name"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
